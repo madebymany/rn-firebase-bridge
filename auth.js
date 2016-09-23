@@ -13,6 +13,8 @@ const createUserWithEmail:(email:string, password:string) => Promise<User> =
     NativeFirebaseBridgeAuth.createUserWithEmail;
 const signInWithEmail:(email:string, password:string) => Promise<User> =
     NativeFirebaseBridgeAuth.signInWithEmail;
+const signInWithCustomToken:(token:any) => Promise<User> =
+    NativeFirebaseBridgeAuth.signInWithCustomToken;
 
 async function signInWithCredential(credential:AuthCredential|Promise<AuthCredential>) : Promise<User> {
     return NativeFirebaseBridgeAuth.signInWithCredential((await credential).id);
@@ -60,6 +62,7 @@ const Auth:AuthModule = {
     addAuthStateDidChangeListener, // eslint-disable-line
     createUserWithEmail,
     signInWithEmail,
+    signInWithCustomToken,
     signInAnonymously,
     signInWithCredential,
     signOut,
@@ -114,6 +117,7 @@ export {
     onAuthStateChanged,
     createUserWithEmail,
     signInWithEmail,
+    signInWithCustomToken,
     signInAnonymously,
     signInWithCredential,
     signOut,

@@ -143,6 +143,23 @@ class FirebaseBridgeAuth: RCTEventEmitter, RCTInvalidating {
       resolve(userToDict(user!));
     }
   }
+
+  @objc func signInWithCustomToken(customToken, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
+    FIRAuth.auth()?.signInWithCustomToken(customToken) { (user, error) in
+      if let error = error {
+        var code = ""
+        if let errorCode = FIRAuthErrorCode(rawValue: error.code) {
+          code = authErrorCodeToString(errorCode)
+        } else if let userInfo = error.userInfo as? Dictionary<String, AnyObject> {
+          code = userInfo["error_name"] as! String
+        }
+        reject(code, error.localizedDescription, error);
+        return;
+      }
+      
+      resolve(userToDict(user!));
+    }
+  }
   
   @objc func signInAnonymously(resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
     FIRAuth.auth()?.signInAnonymouslyWithCompletion() { (user, error) in

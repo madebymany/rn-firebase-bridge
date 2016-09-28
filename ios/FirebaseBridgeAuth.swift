@@ -144,7 +144,7 @@ class FirebaseBridgeAuth: RCTEventEmitter, RCTInvalidating {
     }
   }
 
-  @objc func signInWithCustomToken(customToken, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
+  @objc func signInWithCustomToken(customToken: String, resolver resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
     FIRAuth.auth()?.signInWithCustomToken(customToken) { (user, error) in
       if let error = error {
         var code = ""
